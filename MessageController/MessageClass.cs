@@ -10,6 +10,7 @@ using Telegram.Bot.Types.Enums;
 using Newtonsoft.Json;
 using InstagramAndYoutube.InstagramController;
 using InstagramAndYoutube.YoutubeController;
+using InstagramAndYoutube.YoutubeController.YoutubeMp3Controller;
 
 namespace InstagramAndYoutube.MessageController
 {
@@ -51,7 +52,15 @@ namespace InstagramAndYoutube.MessageController
             }
             else if (message.StartsWith("https://www.youtube.com") || message.StartsWith("https://youtu.be"))
             {
-                SendYoutube.EssentialFunction(botClient,update, cancellationToken);
+                await SendYoutube.EssentialFunction(botClient,update, cancellationToken);
+                await SendYoutubeMp3.EssentialFunction(botClient, update, cancellationToken);
+            }
+            else
+            {
+                await botClient.SendTextMessageAsync(
+                    chatId: update.Message.Chat.Id,
+                    text: "Noto'g'ri link",
+                    cancellationToken: cancellationToken);
             }
         }
     }

@@ -48,7 +48,7 @@ namespace InstagramAndYoutube.InstagramController
             {
                 await botClient.SendVideoAsync(
                        chatId: update.Message.Chat.Id,
-                       video: InputFile.FromUri(update.Message.Text.Replace("www.", "dd")),
+                       video: InputFileUrl.FromUri(update.Message.Text.Replace("www.", "dd")),
                        supportsStreaming: true,
                        cancellationToken: cancellationToken);
             }
