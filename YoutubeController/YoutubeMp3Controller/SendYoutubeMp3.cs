@@ -22,12 +22,6 @@ namespace InstagramAndYoutube.YoutubeController.YoutubeMp3Controller
                 chatAction: ChatAction.UploadDocument,
                 cancellationToken: cancellationToken);
 
-
-            await botClient.SendTextMessageAsync(
-                       chatId: update.Message.Chat.Id,
-                       text: YoutubeMp3Download.link,
-                       cancellationToken: cancellationToken);
-
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage response = await client.GetAsync(YoutubeMp3Download.link);
@@ -38,6 +32,7 @@ namespace InstagramAndYoutube.YoutubeController.YoutubeMp3Controller
                     await botClient.SendAudioAsync(
                        chatId: update.Message.Chat.Id,
                        audio: InputFile.FromStream(new MemoryStream(videoContent)),
+                       caption:"title : "+YoutubeMp3Download.title+"\nsize : "+YoutubeMp3Download.size+"\n Seconds : "+YoutubeMp3Download.length,
                        cancellationToken: cancellationToken);
                 }
             }

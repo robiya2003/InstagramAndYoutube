@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
 using Telegram.Bot;
+using InstagramAndYoutube.YoutubeController;
+using Newtonsoft.Json;
 
 namespace InstagramAndYoutube.CallBackQueryController
 {
@@ -31,9 +33,21 @@ namespace InstagramAndYoutube.CallBackQueryController
                         text: "Assalomu Alekum Kanalga obuna bo'ldingiz \n Botdan foydalanishingiz mumkin",
                         cancellationToken: cancellationToken);
                 }
+                else
+                {
+                    FindVideoFormat(botClient, update, cancellationToken);
+                }
                 
             }
 
+        }
+        public static async Task FindVideoFormat(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        {
+            string[] IndexAndUrl= update.CallbackQuery.Data.ToString().Split(',');
+
+            Console.WriteLine(update.CallbackQuery.Data.ToString());
+
+            SendYoutube.EssentialFunction(botClient,update, cancellationToken, IndexAndUrl[1],int.Parse( IndexAndUrl[0]));
         }
     }
 }
